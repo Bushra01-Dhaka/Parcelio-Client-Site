@@ -12,6 +12,7 @@ const Banner = () => {
      const t1 = gsap.timeline();
 
      t1.to("#rider", {
+      opacity:1,
       right:"8%",
       duration:3,
       delay:1
@@ -30,7 +31,10 @@ const Banner = () => {
         {/* left */}
         <div className="flex-1 lg:w-[630px] py-4">
           <img id="tinyRider" className="relative left-[-150px]" src={tinyMan} alt="" />
-          <h2 className="text-secondary text-4xl lg:text-6xl font-extrabold">
+          <h2 data-aos="fade-right"
+            data-aos-offset="200"
+            data-aos-delay="50"
+            data-aos-duration="2000" className="text-secondary text-4xl lg:text-6xl font-extrabold">
             We Make Sure Your{" "}
             <span className="text-primary">Parcel Arrives</span> On Time – No
             Fuss.
@@ -51,7 +55,7 @@ const Banner = () => {
         </div>
         {/* right */}
         <div>
-           <img id="rider" className="relative right-[-150px] p-4" src={riderImg} alt="" />
+           <img id="rider" className="relative opacity-0 right-[-150px] p-4" src={riderImg} alt="" />
         </div>
 
 
