@@ -59,8 +59,8 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 text-[16px]">{navItem}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn btn-secondary btn-outline text-secondary hover:text-primary rounded-2xl mr-2 ">Sign In</a>
-        <a className="btn btn-primary text-secondary rounded-2xl ">Be a Rider</a>
+        <a className="btn btn-sm lg:btn-md btn-secondary btn-outline text-secondary hover:text-primary rounded-2xl mr-2 ">Sign In</a>
+        <a className="btn btn-sm lg:btn-md  btn-primary text-secondary rounded-2xl ">Be a Rider</a>
       </div>
     </div>
   );

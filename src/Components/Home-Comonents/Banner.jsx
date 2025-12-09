@@ -32,7 +32,6 @@ const Banner = () => {
         <div className="flex-1 lg:w-[630px] py-4">
           <img id="tinyRider" className="relative left-[-150px]" src={tinyMan} alt="" />
           <h2 data-aos="fade-right"
-            data-aos-offset="200"
             data-aos-delay="50"
             data-aos-duration="2000" className="text-secondary text-4xl lg:text-6xl font-extrabold">
             We Make Sure Your{" "}
