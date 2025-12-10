@@ -1,11 +1,14 @@
 import liveTracking from "../../assets/live-tracking.png"
 import safeDelivery from "../../assets/safe-delivery.png"
 
+
 const WhyChooseUs = () => {
   return (
-    <div className="flex justify-center items-center min-h-[100vh] md:max-w-screen-xl mx-auto bg-[#f6eded] my-20 rounded-2xl shadow-2xl px-10">
+    <div className="flex justify-center items-center min-h-[100vh] md:max-w-screen-xl mx-auto bg-secondary my-20 rounded-2xl shadow-2xl px-10">
 
-        <div className="grid grid-cols-1 gap-6 text-secondary my-20">
+        <div>
+
+          <div className="grid grid-cols-1 gap-6 text-secondary my-20">
 
            <div  data-aos="zoom-in"
             data-aos-offset="200"
@@ -55,6 +58,9 @@ const WhyChooseUs = () => {
                   <p className="py-4 lg:w-[900px]">Stay updated in real-time with our live parcel tracking feature. From pick-up to delivery, monitor your shipment's journey and get instant status updates for complete peace of mind.</p>
                 </div>
            </div>
+
+
+        </div>
 
 
         </div>
