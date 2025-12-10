@@ -10,6 +10,7 @@
    default: true;
   --color-primary: #CAEB66;
   --color-secondary: #1A1A1D;
+  --color-extra: #016A70;
 }
 
 .font-urbanist {
@@ -17,3 +18,4 @@
   font-optical-sizing: auto;
   font-style: normal;
 }
+
