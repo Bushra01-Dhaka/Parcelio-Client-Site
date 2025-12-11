@@ -26,7 +26,7 @@ const Banner = () => {
   }, [])
 
   return (
-    <div ref={bannerRef} className="py-10 flex justify-center items-center min-h-[100vh] px-8 lg:px-6">
+    <div ref={bannerRef} className="py-10 flex justify-center items-center min-h-[100vh] px-8 lg:px-6 bg-[#016A70]">
       <div className="flex flex-col lg:flex-row justify-between items-center gap-10 text-secondary">
         {/* left */}
         <div className="flex-1 lg:w-[630px] py-4">

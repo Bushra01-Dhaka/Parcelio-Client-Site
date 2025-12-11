@@ -5,7 +5,7 @@ const Navbar = () => {
   const navItem = (
     <>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
-        <NavLink to="/">Services</NavLink>
+        <NavLink to="/services">Services</NavLink>
       </li>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
         {" "}
@@ -13,7 +13,7 @@ const Navbar = () => {
       </li>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
         {" "}
-        <NavLink to="">About Us</NavLink>
+        <NavLink to="/aboutUs">About Us</NavLink>
       </li>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
         <NavLink to="">Pricing</NavLink>
@@ -24,7 +24,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="bg-fixed z-[99] navbar bg-base-100 shadow-lg py-4 md:max-w-screen-xl mx-auto rounded-xl px-6">
+    <div className="bg-fixed z-[99] navbar bg-base-100 shadow-lg py-4 md:max-w-screen-2xl mx-auto rounded-xl px-6 lg:px-20">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -59,7 +59,7 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 text-[16px]">{navItem}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn btn-sm lg:btn-md btn-secondary btn-outline text-secondary hover:text-primary rounded-2xl mr-2 ">Sign In</a>
+        <Link to="/register" className="btn btn-sm lg:btn-md btn-secondary btn-outline text-secondary hover:text-primary rounded-2xl mr-2 ">Sign In</Link>
         <a className="btn btn-sm lg:btn-md  btn-primary text-secondary rounded-2xl ">Be a Rider</a>
       </div>
     </div>
