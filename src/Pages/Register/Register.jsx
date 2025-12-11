@@ -1,8 +1,12 @@
 import { Link } from "react-router";
 import ParcelioLogo from "../../Components/Home-Comonents/ParcelioLogo";
 import { useForm } from "react-hook-form";
+import useAuth from "../../Hooks/useAuth";
 
 const Register = () => {
+  
+  const {createUser} = useAuth();
+ 
   const {
     register,
     handleSubmit,
@@ -12,6 +16,13 @@ const Register = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+
+    createUser(data.email, data.password)
+    .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser)
+    })
+    .catch(error => console.error(error))
   };
 
   return (
