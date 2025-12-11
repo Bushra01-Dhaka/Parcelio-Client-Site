@@ -1,9 +1,22 @@
 import { Link } from "react-router";
 import ParcelioLogo from "../../Components/Home-Comonents/ParcelioLogo";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="">
+      {/* Logo setup */}
       <div className="flex justify-start items-start pb-6">
         <ParcelioLogo />
       </div>
@@ -13,31 +26,98 @@ const Register = () => {
         </h2>
         <p className="pb-10">Register with Parcelio</p>
 
-        <fieldset className="fieldset w-full text-secondary">
-          <label className="label font-bold text-secondary">Name</label>
-          <input type="text" className="input w-full mb-4" placeholder="Name" />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <fieldset className="fieldset w-full text-secondary">
+            <label className="label font-bold text-secondary mt-4">Name</label>
+            <input
+              type="text"
+              className="input w-full "
+              placeholder="Name"
+              {...register("name", { required: true })}
+            />
 
-          <label className="label font-bold text-secondary">Email</label>
-          <input
-            type="email"
-            className="input w-full mb-4"
-            placeholder="Email"
-          />
+            {errors.name?.type === "required" && (
+              <p
+                role="alert"
+                className=" font-semibold px-2 text-[14px] text-red-500"
+              >
+                Name is required
+              </p>
+            )}
 
-          <label className="label font-bold text-secondary">Password</label>
-          <input
-            type="password"
-            className="input w-full mb-4"
-            placeholder="Password"
-          />
-          <div>
-            <a className="link link-hover">Forgot password?</a>
-          </div>
+            <label className="label font-bold text-secondary mt-4">Email</label>
+            <input
+              type="email"
+              className="input w-full "
+              placeholder="Email"
+              {...register("email", { required: true })}
+            />
 
-          <button className="btn  btn-secondary text-primary mt-4">
-            Register
-          </button>
-        </fieldset>
+            {errors.email?.type === "required" && (
+              <p
+                role="alert"
+                className=" font-semibold px-2 text-[14px] text-red-500"
+              >
+                Email is required
+              </p>
+            )}
+
+            <label className="label font-bold text-secondary mt-4">
+              Password
+            </label>
+            <input
+              type="password"
+              className="input w-full "
+              placeholder="Password"
+              {...register("password", {
+                required: true,
+                minLength: 6,
+                pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+              })}
+            />
+
+            {errors.password?.type === "required" && (
+              <p
+                role="alert"
+                className=" font-semibold px-2 text-[14px] text-red-500"
+              >
+                Password is required
+              </p>
+            )}
+
+            {errors.password?.type === "minLength" && (
+              <p
+                role="alert"
+                className=" font-semibold px-2 text-[14px] text-red-500"
+              >
+                Password should have 6 digits or more
+              </p>
+            )}
+
+             {errors.password?.type === "pattern" && (
+              <p
+                role="alert"
+                className=" font-semibold px-2 text-[14px] text-red-500"
+              >
+                Password must have 1 uppercase, 1 lowercase and 1 special
+                  character.
+              </p>
+            )}
+
+
+
+            {/* <div>
+              <a className="link link-hover">Forgot password?</a>
+            </div> */}
+
+            <button
+              type="submit"
+              className="btn  btn-secondary text-primary mt-4"
+            >
+              Register
+            </button>
+          </fieldset>
+        </form>
 
         <div>
           <p>

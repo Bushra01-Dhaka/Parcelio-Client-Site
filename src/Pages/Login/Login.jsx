@@ -1,40 +1,102 @@
 import { Link } from "react-router";
 import ParcelioLogo from "../../Components/Home-Comonents/ParcelioLogo";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+      } = useForm();
+    
+      const onSubmit = (data) => {
+        console.log(data);
+      };
+    
   return (
     <div className="">
+      {/* logo setup */}
       <div className="flex justify-start items-start pb-6">
         <ParcelioLogo />
       </div>
+
       <div className="card-body w-full lg:w-[500px] bg-primary p-10 rounded-xl shadow-2xl my-8">
         <h2 className="text-3xl lg:text-4xl text-secondary font-extrabold pt-6">
           Welcome Back
         </h2>
         <p className="pb-10">Login with Parcelio</p>
 
-        <fieldset className="fieldset w-full text-secondary">
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <fieldset className="fieldset w-full text-secondary">
+
           <label className="label font-bold text-secondary">Email</label>
           <input
-            type="email"
-            className="input w-full mb-4"
-            placeholder="Email"
-          />
+              type="email"
+              className="input w-full "
+              placeholder="Email"
+              {...register("email", { required: true })}
+            />
+            {errors.email?.type === "required" && (
+              <p
+                role="alert"
+                className=" font-semibold px-2 text-[14px] text-red-500"
+              >
+                Email is required
+              </p>
+            )}
+
+
 
           <label className="label font-bold text-secondary">Password</label>
-          <input
-            type="password"
-            className="input w-full mb-4"
-            placeholder="Password"
-          />
-          <div>
-            <a className="link link-hover">Forgot password?</a>
-          </div>
+           <input
+              type="password"
+              className="input w-full "
+              placeholder="Password"
+              {...register("password", {
+                required: true,
+                minLength: 6,
+                pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+              })}
+            />
+
+             {errors.password?.type === "required" && (
+              <p
+                role="alert"
+                className=" font-semibold px-2 text-[14px] text-red-500"
+              >
+                Password is required
+              </p>
+            )}
+
+            {errors.password?.type === "minLength" && (
+              <p
+                role="alert"
+                className=" font-semibold px-2 text-[14px] text-red-500"
+              >
+                Password should have 6 digits or more
+              </p>
+            )}
+
+             {errors.password?.type === "pattern" && (
+              <p
+                role="alert"
+                className=" font-semibold px-2 text-[14px] text-red-500"
+              >
+                Password must have 1 uppercase, 1 lowercase and 1 special
+                  character.
+              </p>
+            )}
+
 
           <button className="btn  btn-secondary text-primary mt-4">
             Login
           </button>
         </fieldset>
+
+        </form>
+
+
 
         <div>
           <p>
@@ -74,6 +136,7 @@ const Login = () => {
             Login with Google
           </button>
         </div>
+
       </div>
     </div>
   );
