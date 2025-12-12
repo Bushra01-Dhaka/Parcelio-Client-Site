@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import ParcelioLogo from "../../Components/Home-Comonents/ParcelioLogo";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
@@ -6,6 +6,7 @@ import useAuth from "../../Hooks/useAuth";
 const Register = () => {
   
   const {createUser} = useAuth();
+  const navigate = useNavigate();
  
   const {
     register,
@@ -20,7 +21,8 @@ const Register = () => {
     createUser(data.email, data.password)
     .then((result) => {
         const loggedUser = result.user;
-        console.log(loggedUser)
+        console.log(loggedUser);
+        navigate("/")
     })
     .catch(error => console.error(error))
   };

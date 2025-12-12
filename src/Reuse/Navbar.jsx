@@ -1,7 +1,9 @@
 import { Link, NavLink } from "react-router";
 import ParcelioLogo from "../Components/Home-Comonents/ParcelioLogo";
+import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
+  const {user, logOut} = useAuth();
   const navItem = (
     <>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
@@ -9,7 +11,7 @@ const Navbar = () => {
       </li>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
         {" "}
-        <NavLink to="">Coverage</NavLink>
+        <NavLink to="/coverage">Coverage</NavLink>
       </li>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
         {" "}
@@ -23,6 +25,16 @@ const Navbar = () => {
       </li>
     </>
   );
+
+  const handleLogOut = () => {
+     logOut()
+     .then((result) => {
+      console.log(result.user)
+     })
+     .catch((error) => {
+      console.error(error);
+     })
+  }
   return (
     <div className="bg-fixed z-[99] navbar bg-base-100 shadow-lg py-4 md:max-w-screen-2xl mx-auto rounded-xl px-6 lg:px-20">
       <div className="navbar-start">
@@ -59,7 +71,11 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 text-[16px]">{navItem}</ul>
       </div>
       <div className="navbar-end">
-        <Link to="/register" className="btn btn-sm lg:btn-md btn-secondary btn-outline text-secondary hover:text-primary rounded-2xl mr-2 ">Sign In</Link>
+        {
+          user ?  <Link onClick={handleLogOut} to="/register" className="btn btn-sm lg:btn-md btn-secondary hover:btn-outline text-primary rounded-2xl mr-2 ">Log Out</Link>
+          :
+           <Link to="/register" className="btn btn-sm lg:btn-md btn-secondary btn-outline text-secondary hover:text-primary rounded-2xl mr-2 ">Sign In</Link>
+        }
         <a className="btn btn-sm lg:btn-md  btn-primary text-secondary rounded-2xl ">Be a Rider</a>
       </div>
     </div>
