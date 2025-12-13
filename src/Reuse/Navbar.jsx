@@ -6,6 +6,9 @@ const Navbar = () => {
   const {user, logOut} = useAuth();
   const navItem = (
     <>
+        <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
+        <NavLink to="/sendParcel">Send a Parcel</NavLink>
+      </li>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
         <NavLink to="/services">Services</NavLink>
       </li>
