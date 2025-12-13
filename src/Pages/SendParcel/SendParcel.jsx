@@ -1,7 +1,32 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import toast from "react-hot-toast";
 import { useLoaderData } from "react-router";
+
+/* ================= COST CALCULATION ================= */
+const calculateCost = (data) => {
+  const sameDistrict = data.senderCenter === data.receiverCenter;
+  let cost = 0;
+
+  if (data.parcelType === "document") {
+    cost = sameDistrict ? 60 : 80;
+  }
+  
+
+  if (data.parcelType === "non-document") {
+    const weight = Number(data.weight || 0);
+
+    if (weight <= 3) {
+      cost = sameDistrict ? 110 : 150;
+    } else {
+      const extraWeight = weight - 3;
+      cost = sameDistrict
+        ? 110 + extraWeight * 40
+        : 150 + extraWeight * 40 + 40;
+    }
+  }
+
+  return cost;
+};
 
 const SendParcel = () => {
   const {
@@ -10,131 +35,102 @@ const SendParcel = () => {
     watch,
     formState: { errors },
   } = useForm();
+
   const parcelType = watch("parcelType");
-  const [cost, setCost] = useState(null);
-
-  const serviceCenters = useLoaderData();
-  //Extract Unique Regions
-  const uniqueRegions = [...new Set(serviceCenters.map((w) => w.region))]
-
-//   get district by region
-   const getDistrictsByRegion = (region) => 
-     serviceCenters.filter((w) => w.region === region).map((w) => w.district);
-
-
   const senderRegion = watch("senderRegion");
   const receiverRegion = watch("receiverRegion");
 
+  const serviceCenters = useLoaderData();
+
+  /* ================= REGIONS & DISTRICTS ================= */
+  const uniqueRegions = [...new Set(serviceCenters.map((w) => w.region))];
+
+  const getDistrictsByRegion = (region) =>
+    serviceCenters
+      .filter((w) => w.region === region)
+      .map((w) => w.district);
+
+  /* ================= SUBMIT ================= */
   const onSubmit = (data) => {
-    console.log("Parcel Data:", data);
-    // later → cost calculation + toast + confirm
-    let baseCost = data.parcelType === "document" ? 50 : 100;
-    if (data.weight) baseCost += Number(data.weight) * 10;
+    const finalCost = calculateCost(data);
 
-    setCost(baseCost);
-    // toast will be here
-    console.log("Cost", cost)
     toast((t) => (
-  <div className="bg-primary p-2">
-     <p className="btn btn-primary text-secondary ">Delivary Cost: ${cost} tk</p>
-    <button 
-    className="btn btn-secondary border-0 text-primary rounded-0 font-semibold"
-    onClick={() => {
-        toast.dismiss(t.id);
-        const parcelData = {
-            ...data,
-            cost,
-            creation_date: new Date().toISOString(),
-        }
-        console.log("Saving", parcelData);
-        toast.success("Parcel Created Successfully")
-    }}>
-      Dismiss
-    </button>
-  </div>
-));
-  };
+      <div className="bg-base-100 p-4 rounded-xl shadow-xl w-64">
+        <p className="text-lg font-bold text-primary">
+          Delivery Cost: ৳{finalCost}
+        </p>
 
-  const saveParcel = (data, cost) => {
-    const parcelData = {
-      ...data,
-      cost,
-      creation_date: new Date().toISOString(),
-    };
+        <button
+          className="btn btn-primary btn-sm w-full mt-4"
+          onClick={() => {
+            toast.dismiss(t.id);
 
-    console.log("Saving to DB: ", parcelData);
-    // toast.success("Successfully toasted!");
-    // send data to backend
+            const parcelData = {
+              ...data,
+              cost: finalCost,
+              creation_date: new Date().toISOString(),
+            };
+
+            console.log("Saving Parcel:", parcelData);
+            toast.success("Parcel Created Successfully");
+          }}
+        >
+          Confirm
+        </button>
+      </div>
+    ));
   };
 
   return (
     <div className="min-h-screen bg-base-300 py-10 px-4">
-      <div className="max-w-4xl text-secondary mx-auto bg-base-100 shadow-xl rounded-xl p-6 lg:p-10">
-        {/* Heading */}
-        <h1 className="text-3xl lg:text-6xl font-bold text-center">
+      <div className="max-w-4xl mx-auto bg-base-100 shadow-xl rounded-xl p-6 lg:p-10 text-secondary">
+        {/* ================= HEADER ================= */}
+        <h1 className="text-3xl lg:text-5xl font-bold text-center">
           Send A Parcel
         </h1>
         <p className="text-center text-sm text-gray-500 mt-2">
           Door to Door delivery requires both pickup and delivery information
         </p>
 
+        {/* ================= FORM ================= */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mt-8 space-y-10 text-secondary"
+          className="mt-8 space-y-10"
         >
-          {/* ================= Parcel Info ================= */}
-          <div>
+          {/* ================= PARCEL INFO ================= */}
+          <section>
             <h2 className="text-lg font-bold mb-4">Parcel Information</h2>
 
             <div className="grid md:grid-cols-3 gap-4">
-              {/* Parcel Type */}
-              <div className="form-control">
-                <label className="label">Type</label>
-                <select
-                  className="select select-bordered"
-                  {...register("parcelType", { required: true })}
-                >
-                  <option value="">Select type</option>
-                  <option value="document">Document</option>
-                  <option value="non-document">Non-document</option>
-                </select>
-                {errors.parcelType && (
-                  <span className="text-red-500 text-sm">Required</span>
-                )}
-              </div>
+              <select
+                className="select select-bordered"
+                {...register("parcelType", { required: true })}
+              >
+                <option value="">Select Type</option>
+                <option value="document">Document</option>
+                <option value="non-document">Non-Document</option>
+              </select>
 
-              {/* Title */}
-              <div className="form-control">
-                <label className="label">Parcel Title</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Important papers"
-                  className="input input-bordered"
-                  {...register("title", { required: true })}
-                />
-                {errors.title && (
-                  <span className="text-red-500 text-sm">Required</span>
-                )}
-              </div>
+              <input
+                className="input input-bordered"
+                placeholder="Parcel Title"
+                {...register("title", { required: true })}
+              />
 
-              {/* Weight (optional) */}
               {parcelType === "non-document" && (
-                <div className="form-control">
-                  <label className="label">Weight (kg)</label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    placeholder="Optional"
-                    className="input input-bordered"
-                    {...register("weight")}
-                  />
-                </div>
+                <input
+                  type="number"
+                  step="0.1"
+                  className="input input-bordered"
+                  placeholder="Weight (kg)"
+                  {...register("weight")}
+                />
               )}
             </div>
-          </div>
+          </section>
 
-          {/* ================= Sender Info ================= */}
-          <div>
+          {/* ================= SENDER INFO ================= */}
+          <section>
             <h2 className="text-lg font-bold mb-4">Sender Information</h2>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -143,48 +139,53 @@ const SendParcel = () => {
                 placeholder="Sender Name"
                 {...register("senderName", { required: true })}
               />
+
               <input
                 className="input input-bordered"
                 placeholder="Sender Contact"
                 {...register("senderContact", { required: true })}
               />
+
               <select
                 className="select select-bordered"
                 {...register("senderRegion", { required: true })}
               >
                 <option value="">Select Region</option>
-                {
-                    uniqueRegions.map((region) => (<option
-                        key={region} 
-                        value={region}>{region}</option>))
-                }
+                {uniqueRegions.map((region) => (
+                  <option key={region} value={region}>
+                    {region}
+                  </option>
+                ))}
               </select>
+
               <select
                 className="select select-bordered"
                 {...register("senderCenter", { required: true })}
               >
                 <option value="">Select Service Center</option>
-                {
-                     getDistrictsByRegion(senderRegion).map((district) => (<option 
-                        key={district}
-                        value={district}>{district}</option>))
-                }
+                {getDistrictsByRegion(senderRegion).map((district) => (
+                  <option key={district} value={district}>
+                    {district}
+                  </option>
+                ))}
               </select>
+
               <input
                 className="input input-bordered md:col-span-2"
                 placeholder="Pickup Address"
                 {...register("senderAddress", { required: true })}
               />
+
               <textarea
                 className="textarea textarea-bordered md:col-span-2"
                 placeholder="Pickup Instruction"
                 {...register("pickupInstruction", { required: true })}
               />
             </div>
-          </div>
+          </section>
 
-          {/* ================= Receiver Info ================= */}
-          <div>
+          {/* ================= RECEIVER INFO ================= */}
+          <section>
             <h2 className="text-lg font-bold mb-4">Receiver Information</h2>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -193,53 +194,55 @@ const SendParcel = () => {
                 placeholder="Receiver Name"
                 {...register("receiverName", { required: true })}
               />
+
               <input
                 className="input input-bordered"
                 placeholder="Receiver Contact"
                 {...register("receiverContact", { required: true })}
               />
+
               <select
                 className="select select-bordered"
                 {...register("receiverRegion", { required: true })}
               >
                 <option value="">Select Region</option>
-                {
-                    uniqueRegions.map((region) => (<option
-                        key={region} 
-                        value={region}>{region}</option>))
-                }
-                
+                {uniqueRegions.map((region) => (
+                  <option key={region} value={region}>
+                    {region}
+                  </option>
+                ))}
               </select>
+
               <select
                 className="select select-bordered"
                 {...register("receiverCenter", { required: true })}
               >
                 <option value="">Select Service Center</option>
-                     {
-                     getDistrictsByRegion(receiverRegion).map((district) => (<option 
-                        key={district}
-                        value={district}>{district}</option>))
-                }
+                {getDistrictsByRegion(receiverRegion).map((district) => (
+                  <option key={district} value={district}>
+                    {district}
+                  </option>
+                ))}
               </select>
+
               <input
                 className="input input-bordered md:col-span-2"
                 placeholder="Delivery Address"
                 {...register("receiverAddress", { required: true })}
               />
+
               <textarea
                 className="textarea textarea-bordered md:col-span-2"
                 placeholder="Delivery Instruction"
                 {...register("deliveryInstruction", { required: true })}
               />
             </div>
-          </div>
+          </section>
 
-          {/* Submit */}
-          <div className="text-center">
-            <button className="btn btn-block btn-primary text-secondary font-bold px-10">
-              Submit Parcel
-            </button>
-          </div>
+          {/* ================= SUBMIT ================= */}
+          <button className="btn btn-primary btn-block text-secondary font-bold">
+            Submit Parcel
+          </button>
         </form>
       </div>
     </div>
