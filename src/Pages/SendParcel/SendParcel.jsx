@@ -4,6 +4,7 @@ import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useQueries } from "@tanstack/react-query";
 
 // Tracking Id generator
 const generateTrackingId = () => {
@@ -74,6 +75,7 @@ const getPricingBreakdown = (data) => {
 };
 
 // ends
+
 
 const SendParcel = () => {
   const {

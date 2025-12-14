@@ -23,9 +23,11 @@ const Navbar = () => {
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
         <NavLink to="">Pricing</NavLink>
       </li>
-      <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
-        <NavLink to="">Be a Rider</NavLink>
+      {
+        user &&  <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
+        <NavLink to="/dashboard">Dashboard</NavLink>
       </li>
+      }
     </>
   );
 
