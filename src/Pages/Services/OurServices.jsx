@@ -17,8 +17,8 @@ const OurServices = () => {
   return (
     <div className={`flex justify-center lg:max-w-screen-2xl mx-auto items-center min-h-[100vh] lg:py-20 px-8 lg:px-0
       transition-all duration-500 
-      ${isHovered ? "bg-primary" : "bg-[#016A70]"}`}>
-      <div className="">
+      ${isHovered ? "bg-primary" : "bg-slate-200"}`}>
+      <div className="bg-[#016A70] p-4 lg:p-10 rounded-xl shadow-2xl">
 
         <div 
         data-aos="zoom-in"

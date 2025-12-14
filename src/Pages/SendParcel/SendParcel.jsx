@@ -1,6 +1,18 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+
+// Tracking Id generator
+const generateTrackingId = () => {
+  const prefix = "PX";
+  const date = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+  return `${prefix}-${date}-${random}`;
+};
 
 /* ================= COST CALCULATION ================= */
 const calculateCost = (data) => {
@@ -10,7 +22,6 @@ const calculateCost = (data) => {
   if (data.parcelType === "document") {
     cost = sameDistrict ? 60 : 80;
   }
-  
 
   if (data.parcelType === "non-document") {
     const weight = Number(data.weight || 0);
@@ -28,6 +39,42 @@ const calculateCost = (data) => {
   return cost;
 };
 
+// NEW ADDED THING
+const getPricingBreakdown = (data) => {
+  const sameDistrict = data.senderCenter === data.receiverCenter;
+  const weight = Number(data.weight || 0);
+
+  let base = 0;
+  let extraWeightCharge = 0;
+  let outsideExtra = 0;
+
+  if (data.parcelType === "document") {
+    base = sameDistrict ? 60 : 80;
+  }
+
+  if (data.parcelType === "non-document") {
+    if (weight <= 3) {
+      base = sameDistrict ? 110 : 150;
+    } else {
+      base = sameDistrict ? 110 : 150;
+      extraWeightCharge = (weight - 3) * 40;
+      if (!sameDistrict) outsideExtra = 40;
+    }
+  }
+
+  const total = base + extraWeightCharge + outsideExtra;
+
+  return {
+    sameDistrict,
+    base,
+    extraWeightCharge,
+    outsideExtra,
+    total,
+  };
+};
+
+// ends
+
 const SendParcel = () => {
   const {
     register,
@@ -35,6 +82,9 @@ const SendParcel = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const parcelType = watch("parcelType");
   const senderRegion = watch("senderRegion");
@@ -46,39 +96,103 @@ const SendParcel = () => {
   const uniqueRegions = [...new Set(serviceCenters.map((w) => w.region))];
 
   const getDistrictsByRegion = (region) =>
-    serviceCenters
-      .filter((w) => w.region === region)
-      .map((w) => w.district);
+    serviceCenters.filter((w) => w.region === region).map((w) => w.district);
 
   /* ================= SUBMIT ================= */
   const onSubmit = (data) => {
-    const finalCost = calculateCost(data);
+    const pricing = getPricingBreakdown(data);
+    const weight = Number(data.weight || 0);
+    const extraKg = weight > 3 ? weight - 3 : 0;
 
-    toast((t) => (
-      <div className="bg-base-100 p-4 rounded-xl shadow-xl w-64">
-        <p className="text-lg font-bold text-primary">
-          Delivery Cost: ৳{finalCost}
+    Swal.fire({
+      title: "Confirm Delivery Cost",
+      icon: "info",
+      html: `
+      <div class="text-left space-y-2 text-sm">
+
+        <p><strong>Parcel Type:</strong> ${data.parcelType}</p>
+        <p><strong>Delivery:</strong> ${
+          pricing.sameDistrict ? "Within District" : "Outside District"
+        }</p>
+
+        <hr />
+
+        <p><strong>Base Price:</strong> ৳${pricing.base}</p>
+
+        ${
+          extraKg > 0
+            ? `
+              <div class="bg-gray-100 p-2 rounded-md">
+                <p class="font-semibold">Extra Weight Calculation:</p>
+                <p>• Base weight allowance: <strong>3 kg</strong></p>
+                <p>• Parcel weight: <strong>${weight} kg</strong></p>
+                <p>• Extra weight: <strong>${extraKg} kg</strong></p>
+                <p>• Rate: <strong>৳40 per kg</strong></p>
+                <p class="mt-1">
+                  ➜ ${extraKg} × 40 = 
+                  <strong>৳${pricing.extraWeightCharge}</strong>
+                </p>
+              </div>
+            `
+            : ""
+        }
+
+        ${
+          pricing.outsideExtra
+            ? `
+              <p>
+                <strong>Outside District Extra Charge:</strong>
+                ৳${pricing.outsideExtra}
+              </p>
+            `
+            : ""
+        }
+
+        <hr />
+
+        <p style="font-size:18px; color:#1A1A1D;">
+          <strong>Total Payable: ৳${pricing.total}</strong>
         </p>
-
-        <button
-          className="btn btn-primary btn-sm w-full mt-4"
-          onClick={() => {
-            toast.dismiss(t.id);
-
-            const parcelData = {
-              ...data,
-              cost: finalCost,
-              creation_date: new Date().toISOString(),
-            };
-
-            console.log("Saving Parcel:", parcelData);
-            toast.success("Parcel Created Successfully");
-          }}
-        >
-          Confirm
-        </button>
       </div>
-    ));
+    `,
+      showCancelButton: true,
+      confirmButtonText: "Proceed to Payment",
+      cancelButtonText: "Go Back & Edit",
+      confirmButtonColor: "#B7D55C",
+      cancelButtonColor: "#6b7280",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const parcelData = {
+          ...data,
+          cost: pricing.total,
+          created_by: user?.email,
+          payment_status: "unpaid",
+          delivery_status: "not_collected",
+          tracking_id: generateTrackingId(),
+          creation_date: new Date().toISOString(),
+        };
+
+        console.log("Saving Parcel:", parcelData);
+
+
+        axiosSecure.post(`/parcels`,parcelData)
+        .then((res) => {
+          console.log(res.data)
+          if(res.data.insertedId){
+              // TODO: will redirect to payment page navigate("/payment", { state: parcelData });  💩💩💩💩
+
+          Swal.fire({
+          icon: "success",
+          title: "Parcel Created!",
+          text: "Redirecting to payment...",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+          }
+        })
+
+      }
+    });
   };
 
   return (
@@ -93,10 +207,7 @@ const SendParcel = () => {
         </p>
 
         {/* ================= FORM ================= */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mt-8 space-y-10"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-10">
           {/* ================= PARCEL INFO ================= */}
           <section>
             <h2 className="text-lg font-bold mb-4">Parcel Information</h2>

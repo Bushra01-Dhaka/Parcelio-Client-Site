@@ -2,7 +2,7 @@ import busImg from "../../assets/bus.png";
 
 const Features = () => {
   return (
-    <div className="flex justify-center items-center min-h-[60vh] md:max-w-screen-[800px] mx-auto bg-primary">
+    <div className="flex justify-center items-center min-h-[60vh] md:max-w-screen-[800px] mx-auto ">
       <div className="py-20">
         <h2 className="text-4xl text-secondary font-bold p-4">How It Works</h2>
         <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 p-4">
