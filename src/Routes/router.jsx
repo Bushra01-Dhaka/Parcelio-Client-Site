@@ -12,6 +12,7 @@ import SendParcel from "../Pages/SendParcel/SendParcel";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import UserParcels from "../Pages/Dashboard/UserParcels";
 import PercelDetails from "../Pages/Dashboard/PercelDetails";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ export const router = createBrowserRouter([
       {
         path: "parcel/:id",
         Component: PercelDetails
+      },
+      {
+        path: "payment/:id",
+        Component: Payment
       }
     ]
   }

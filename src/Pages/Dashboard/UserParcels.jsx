@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 import useAuth from "../../Hooks/useAuth"
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 
 const UserParcels = () => {
   const {user} = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate()
   const {data : parcels=[],
     isLoading,
     refetch
@@ -50,6 +51,12 @@ const UserParcels = () => {
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
+  }
+
+  const handlePay = (id) => {
+    console.log("Proceed to Payment for: ", id);
+    // payment logic here 
+    navigate(`/dashboard/payment/${id}`)
   }
 
 
@@ -105,7 +112,8 @@ const UserParcels = () => {
 
                   {parcel.payment_status === "unpaid" && (
                     <Link
-                      to={`/payment/${parcel._id}`}
+                      to={`/dashboard/payment/${parcel._id}`}
+                      onClick={() => handlePay(parcel._id)}
                       className="btn btn-xs btn-outline btn-success"
                     >
                       Pay
@@ -164,7 +172,7 @@ const UserParcels = () => {
 
               {parcel.payment_status === "unpaid" && (
                 <Link
-                  to={`/payment/${parcel._id}`}
+                  to={`/dashboard/payment/${parcel._id}`}
                   className="btn btn-sm btn-outline btn-success flex-1"
                 >
                   Pay
