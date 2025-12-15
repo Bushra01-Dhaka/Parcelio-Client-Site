@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import ParcelioLogo from "../../Components/Home-Comonents/ParcelioLogo";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
@@ -6,6 +6,9 @@ import useAuth from "../../Hooks/useAuth";
 const Login = () => {
   const {login} = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from || "/";
     const {
         register,
         handleSubmit,
@@ -19,7 +22,7 @@ const Login = () => {
         login(data.email, data.password)
         .then((result) => {
           console.log(result.user);
-          navigate("/");
+          navigate(from);
         })
         .catch(error => {
           console.error(error);

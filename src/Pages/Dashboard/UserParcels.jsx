@@ -97,7 +97,7 @@ const UserParcels = () => {
                 </td>
                 <td className="text-center space-x-2">
                   <Link
-                    to={`/parcel/${parcel._id}`}
+                    to={`/dashboard/parcel/${parcel._id}`}
                     className="btn btn-xs btn-outline btn-info"
                   >
                     View
@@ -156,7 +156,7 @@ const UserParcels = () => {
 
             <div className="flex flex-wrap gap-2 mt-3">
               <Link
-                to={`/parcel/${parcel._id}`}
+                to={`/dashboard/parcel/${parcel?._id}`}
                 className="btn btn-sm btn-outline btn-info flex-1"
               >
                 View
