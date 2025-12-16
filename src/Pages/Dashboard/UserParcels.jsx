@@ -91,7 +91,7 @@ const UserParcels = () => {
                   {new Date(parcel.creation_date).toLocaleDateString("en-GB")}
                 </td>
                 <td>৳{parcel.cost}</td>
-                <td>
+                <td className="mx-auto text-center font-bold text-secondary">
                   <span
                     className={`badge ${
                       parcel.payment_status === "paid"

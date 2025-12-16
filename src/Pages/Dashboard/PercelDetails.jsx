@@ -19,8 +19,8 @@ const ParcelDetails = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center py-20">
-        <span className="loading loading-spinner loading-lg"></span>
+      <div className="flex justify-center items-center py-2 min-h-[100vh]">
+        <span className="loading loading-spinner text-6xl loading-lg"></span>
       </div>
     );
   }
