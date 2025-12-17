@@ -1,10 +1,8 @@
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { useQueries } from "@tanstack/react-query";
 
 // Tracking Id generator
 const generateTrackingId = () => {
@@ -14,6 +12,7 @@ const generateTrackingId = () => {
 
   return `${prefix}-${date}-${random}`;
 };
+
 
 /* ================= COST CALCULATION ================= */
 const calculateCost = (data) => {
@@ -76,7 +75,6 @@ const getPricingBreakdown = (data) => {
 
 // ends
 
-
 const SendParcel = () => {
   const {
     register,
@@ -87,6 +85,7 @@ const SendParcel = () => {
 
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const parcelType = watch("parcelType");
   const senderRegion = watch("senderRegion");
@@ -176,23 +175,19 @@ const SendParcel = () => {
 
         console.log("Saving Parcel:", parcelData);
 
-
-        axiosSecure.post(`/parcels`,parcelData)
-        .then((res) => {
-          console.log(res.data)
-          if(res.data.insertedId){
-              // TODO: will redirect to payment page navigate("/payment", { state: parcelData });  💩💩💩💩
-
-          Swal.fire({
-          icon: "success",
-          title: "Parcel Created!",
-          text: "Redirecting to payment...",
-          timer: 2000,
-          showConfirmButton: false,
-        });
+        axiosSecure.post(`/parcels`, parcelData).then((res) => {
+          console.log(res.data);
+          if (res.data.insertedId) {
+            Swal.fire({
+              icon: "success",
+              title: "Parcel Created!",
+              timer: 2000,
+              showConfirmButton: false,
+            }).then(() => {
+              navigate("/dashboard/userParcels");
+            });
           }
-        })
-
+        });
       }
     });
   };

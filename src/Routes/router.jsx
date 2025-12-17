@@ -13,6 +13,9 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import UserParcels from "../Pages/Dashboard/UserParcels";
 import PercelDetails from "../Pages/Dashboard/PercelDetails";
 import Payment from "../Pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
+import TrackAPackage from "../Pages/Dashboard/TrackParcel";
+import TrackParcel from "../Pages/Dashboard/TrackParcel";
 
 export const router = createBrowserRouter([
   {
@@ -73,7 +76,16 @@ export const router = createBrowserRouter([
       {
         path: "payment/:id",
         Component: Payment
+      },
+      {
+        path:"paymentHistory",
+        Component: PaymentHistory,
+      },
+      {
+        path:"track",
+        Component:TrackParcel,
       }
+      
     ]
   }
 ]);

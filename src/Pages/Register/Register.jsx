@@ -2,11 +2,14 @@ import { Link, useNavigate } from "react-router";
 import ParcelioLogo from "../../Components/Home-Comonents/ParcelioLogo";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
+import axios from "axios";
+import { useState } from "react";
 
 const Register = () => {
   
-  const {createUser} = useAuth();
+  const {createUser, updateUserProfile} = useAuth();
   const navigate = useNavigate();
+  const [profilePic, setProfilePic] = useState('');
  
   const {
     register,
@@ -22,10 +25,44 @@ const Register = () => {
     .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
+        
+        // update user info in the database
+
+
+
+        // update user profile in firebase
+        const userProfile = {
+          displayName: data.name,
+          photoURL: profilePic
+        }
+        updateUserProfile(userProfile)
+        .then(() => {
+          console.log("Profile Name and Picture updated")
+        } )
+        .catch(error => {
+          console.error(error);
+        })
+
+
+
+
+
         navigate("/")
     })
     .catch(error => console.error(error))
   };
+
+
+  const handleImageUpload = async (e) => {
+    const image = e.target.files[0];
+    console.log(image)
+    const formData = new FormData();
+    formData.append('image', image)
+    const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_uploader_key}`
+
+    const res = await axios.post(imageUploadUrl, formData)
+    setProfilePic(res.data.data.url)
+  }
 
   return (
     <div className="">
@@ -57,6 +94,17 @@ const Register = () => {
                 Name is required
               </p>
             )}
+
+            
+            <label className="label font-bold text-secondary mt-4">Profile Picture</label>
+            <input 
+            type="file" 
+            className="input"
+            onChange={handleImageUpload}
+            placeholder="Your Profile Picture"
+             />
+
+
 
             <label className="label font-bold text-secondary mt-4">Email</label>
             <input
