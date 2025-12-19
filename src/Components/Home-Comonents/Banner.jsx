@@ -44,8 +44,8 @@ const Banner = () => {
             deliver on time, every time.
           </p>
           <div className="py-6 font-semibold">
-            <a href="/register" className="btn btn-secondary btn-outline text-secondary hover:text-primary rounded-2xl mr-2 ">
-              Sign In
+            <a href="/sendParcel" className="btn btn-secondary btn-outline text-secondary hover:text-primary rounded-2xl mr-2 ">
+              Send a Parcel
             </a>
             <a className="btn btn-primary text-secondary rounded-2xl ">
               Be a Rider

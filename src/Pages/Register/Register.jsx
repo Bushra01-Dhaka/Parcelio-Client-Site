@@ -1,15 +1,20 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import ParcelioLogo from "../../Components/Home-Comonents/ParcelioLogo";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
 import axios from "axios";
 import { useState } from "react";
+import useAxios from "../../Hooks/useAxios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Register = () => {
   
-  const {createUser, updateUserProfile} = useAuth();
+  const {createUser, updateUserProfile, googleLogIn} = useAuth();
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState('');
+  const axiosPublic = useAxios();
+  const axiosSecure = useAxiosSecure();
+  const location = useLocation();
  
   const {
     register,
@@ -22,11 +27,20 @@ const Register = () => {
     console.log(data);
 
     createUser(data.email, data.password)
-    .then((result) => {
+    .then(async (result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
         
         // update user info in the database
+        const userInfo = {
+          email: data.email,
+          name: data.name,
+          created_at: new Date().toISOString(),
+          last_log_in: new Date().toISOString(),
+        }
+
+        const userRes = await axiosPublic.post(`/users`, userInfo);
+        console.log(userRes.data);
 
 
 
@@ -62,7 +76,33 @@ const Register = () => {
 
     const res = await axios.post(imageUploadUrl, formData)
     setProfilePic(res.data.data.url)
-  }
+  };
+
+
+  const handleGoogleLogin = () => {
+        googleLogIn()
+        .then(result => {
+          const user = result.user;
+          console.log(user);
+          // update user info into db
+          const userInfo = {
+            email: user?.email,
+            name: result?.user?.displayName,
+            created_at: new Date().toISOString(),
+            last_log_in: new Date().toISOString(),
+          }
+          
+          axiosSecure.post('/users', userInfo)
+          .then((res) => {
+            console.log("User data has been stored", res.data)
+            navigate(location.state || '/')
+          })
+
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
 
   return (
     <div className="">
@@ -187,7 +227,7 @@ const Register = () => {
               Login
             </Link>
           </p>
-          <button className="btn hover:bg-slate-200 mt-8 w-full bg-white text-black border-secondary">
+          <button onClick={handleGoogleLogin} className="btn hover:bg-slate-200 mt-8 w-full bg-white text-black border-secondary">
             <svg
               aria-label="Google logo"
               width="16"

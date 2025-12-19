@@ -2,11 +2,13 @@ import { Link, useLocation, useNavigate } from "react-router";
 import ParcelioLogo from "../../Components/Home-Comonents/ParcelioLogo";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
+import useAxios from "../../Hooks/useAxios";
 
 const Login = () => {
-  const {login} = useAuth();
+  const {login,  googleLogIn} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosPublic = useAxios();
 
   const from = location.state?.from || "/";
     const {
@@ -28,6 +30,24 @@ const Login = () => {
           console.error(error);
         })
       };
+
+    const handleGoogleLogin = () => {
+        googleLogIn()
+        .then(result => {
+          const user = result.user;
+          console.log(user);
+          // update user info into db
+          const userInfo = {
+            email: user?.email,
+            name: result?.user?.displayName,
+            created_at: new Date().toISOString(),
+            last_log_in: new Date().toISOString(),
+          }
+          const userRes = axiosPublic.post(`/users`, userInfo);
+          console.log(userRes.data)
+
+        })
+    }
     
   return (
     <div className="">
@@ -120,7 +140,7 @@ const Login = () => {
               Register
             </Link>
           </p>
-          <button className="btn hover:bg-slate-200 mt-8 w-full bg-white text-black border-secondary">
+          <button onClick={handleGoogleLogin} className="btn hover:bg-slate-200 mt-8 w-full bg-white text-black border-secondary">
             <svg
               aria-label="Google logo"
               width="16"
