@@ -17,15 +17,15 @@ const OurServices = () => {
   return (
     <div className={`flex justify-center lg:max-w-screen-2xl mx-auto items-center min-h-[100vh] lg:py-20 px-8 lg:px-0
       transition-all duration-500 
-      ${isHovered ? "bg-primary" : "bg-slate-200"}`}>
-      <div className="bg-[#016A70] p-4 lg:p-10 rounded-xl shadow-2xl">
+      ${isHovered ? "bg-primary" : ""}`}>
+      <div className="bg-primary p-4 lg:p-10 rounded-md ">
 
         <div 
         data-aos="zoom-in"
             data-aos-delay="50"
             data-aos-duration="1000"
         className="text-center pt-10">
-          <h2 className="text-4xl text-[#ffff] lg:text-6xl font-extrabold py-4">
+          <h2 className="text-4xl text-secondary lg:text-6xl font-extrabold py-4">
             Our Services
           </h2>
           <p className="pb-4 font-semibold  lg:w-[800px] mx-auto w-full">

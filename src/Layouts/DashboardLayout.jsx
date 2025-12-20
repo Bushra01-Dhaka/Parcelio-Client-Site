@@ -2,7 +2,13 @@ import { NavLink, Outlet } from "react-router";
 import ParcelioLogo from "../Components/Home-Comonents/ParcelioLogo";
 import { RxDashboard } from "react-icons/rx";
 import { TbTruckDelivery } from "react-icons/tb";
-import { FaHistory, FaTruck, FaUserEdit } from "react-icons/fa";
+import {
+  FaHistory,
+  FaTruck,
+  FaUserEdit,
+  FaMotorcycle,
+  FaUserClock,
+} from "react-icons/fa";
 
 const DashboardLayout = () => {
   return (
@@ -88,6 +94,24 @@ const DashboardLayout = () => {
                   Update Profile
                 </NavLink>
               </li>
+               <li>
+            <NavLink
+              to="/dashboard/activeRiders"
+              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+            >
+              <FaMotorcycle className="text-lg" />
+              Active Riders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/pendingRiders"
+              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+            >
+              <FaUserClock className="text-lg" />
+              Pending Riders
+            </NavLink>
+          </li>
             </ul>
           </div>
         </div>
@@ -154,6 +178,24 @@ const DashboardLayout = () => {
             >
               <FaUserEdit className="text-lg" />
               Update Profile
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/activeRiders"
+              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+            >
+              <FaMotorcycle className="text-lg" />
+              Active Riders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/pendingRiders"
+              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+            >
+              <FaUserClock className="text-lg" />
+              Pending Riders
             </NavLink>
           </li>
         </ul>

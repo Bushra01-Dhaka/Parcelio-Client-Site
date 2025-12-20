@@ -20,6 +20,7 @@ const Register = () => {
     register,
     handleSubmit,
     watch,
+    refetch,
     formState: { errors },
   } = useForm();
 
@@ -51,7 +52,8 @@ const Register = () => {
         }
         updateUserProfile(userProfile)
         .then(() => {
-          console.log("Profile Name and Picture updated")
+          console.log("Profile Name and Picture updated");
+          refetch()
         } )
         .catch(error => {
           console.error(error);
