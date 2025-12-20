@@ -3,10 +3,10 @@ import ParcelioLogo from "../Components/Home-Comonents/ParcelioLogo";
 import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
-  const {user, logOut} = useAuth();
+  const { user, logOut } = useAuth();
   const navItem = (
     <>
-        <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
+      <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
         <NavLink to="/sendParcel">Send a Parcel</NavLink>
       </li>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
@@ -21,25 +21,25 @@ const Navbar = () => {
         <NavLink to="/aboutUs">About Us</NavLink>
       </li>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
-        <NavLink to="">Pricing</NavLink>
+        <NavLink to="/beARider">Be A Rider</NavLink>
       </li>
-      {
-        user &&  <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
-        <NavLink to="/dashboard">Dashboard</NavLink>
-      </li>
-      }
+      {user && (
+        <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
+          <NavLink to="/dashboard">Dashboard</NavLink>
+        </li>
+      )}
     </>
   );
 
   const handleLogOut = () => {
-     logOut()
-     .then((result) => {
-      console.log(result.user)
-     })
-     .catch((error) => {
-      console.error(error);
-     })
-  }
+    logOut()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <div className="bg-fixed z-[99] navbar bg-base-100 shadow-lg py-4 md:max-w-screen-2xl mx-auto rounded-xl px-6 lg:px-20">
       <div className="navbar-start">
@@ -68,20 +68,38 @@ const Navbar = () => {
             {navItem}
           </ul>
         </div>
-          <Link>
-             <ParcelioLogo/>
-          </Link>
+        <Link>
+          <ParcelioLogo />
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 text-[16px]">{navItem}</ul>
       </div>
       <div className="navbar-end">
-        {
-          user ?  <Link onClick={handleLogOut} to="/register" className="btn btn-sm lg:btn-md btn-secondary hover:btn-outline text-primary rounded-2xl mr-2 ">Log Out</Link>
-          :
-           <Link to="/login" className="btn btn-sm lg:btn-md btn-secondary btn-outline text-secondary hover:text-primary rounded-2xl mr-2 ">Sign Up</Link>
-        }
-        <a className="btn btn-sm lg:btn-md  btn-primary text-secondary rounded-2xl ">Be a Rider</a>
+        {user && (
+          <div className="avatar avatar-online mr-2">
+            <div className="w-12 rounded-full">
+              <img src= {user?.photoURL} />
+            </div>
+          </div>
+        )}
+        {user ? (
+          <Link
+            onClick={handleLogOut}
+            to="/register"
+            className="btn btn-sm lg:btn-md btn-secondary hover:btn-outline text-primary rounded-2xl mr-2 "
+          >
+            Log Out
+          </Link>
+        ) : (
+          <Link
+            to="/login"
+            className="btn btn-sm lg:btn-md  btn-primary text-secondary hover:font-bold rounded-2xl "
+          >
+            Sign Up
+          </Link>
+        )}
+
       </div>
     </div>
   );

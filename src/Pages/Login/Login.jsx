@@ -43,9 +43,16 @@ const Login = () => {
             created_at: new Date().toISOString(),
             last_log_in: new Date().toISOString(),
           }
-          const userRes = axiosPublic.post(`/users`, userInfo);
-          console.log(userRes.data)
+          axiosPublic.post(`/users`, userInfo)
+          .then((res) => {
+            console.log("User data has been stored", res.data)
+            // navigate(location.state || '/')
+            navigate(from)
+          })
 
+        })
+         .catch(error => {
+          console.log(error)
         })
     }
     

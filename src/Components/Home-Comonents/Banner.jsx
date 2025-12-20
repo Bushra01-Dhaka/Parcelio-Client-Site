@@ -3,6 +3,7 @@ import riderImg from "../../assets/riderImg.png";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
+import { Link } from "react-router";
 gsap.registerPlugin(ScrollTrigger);
 
 const Banner = () => {
@@ -47,9 +48,9 @@ const Banner = () => {
             <a href="/sendParcel" className="btn btn-secondary btn-outline text-secondary hover:text-primary rounded-2xl mr-2 ">
               Send a Parcel
             </a>
-            <a className="btn btn-primary text-secondary rounded-2xl ">
+            <Link to="/beARider" className="btn btn-primary text-secondary rounded-2xl ">
               Be a Rider
-            </a>
+            </Link>
           </div>
         </div>
         {/* right */}

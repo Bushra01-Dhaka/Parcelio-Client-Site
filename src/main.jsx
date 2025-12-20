@@ -34,7 +34,7 @@ createRoot(document.getElementById("root")).render(
           },
         }}
       />
-      <div className="md:max-w-screen-1xl mx-auto font-urbanist bg-slate-200">
+      <div className="md:max-w-screen-1xl mx-auto font-urbanist bg-[#F9FAFB]">
         <RouterProvider router={router} />
       </div>
     </AuthProvider>

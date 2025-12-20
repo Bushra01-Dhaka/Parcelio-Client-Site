@@ -16,6 +16,7 @@ import Payment from "../Pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 import TrackAPackage from "../Pages/Dashboard/TrackParcel";
 import TrackParcel from "../Pages/Dashboard/TrackParcel";
+import BeARider from "../Pages/Dashboard/BeARider/BeARider";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,11 @@ export const router = createBrowserRouter([
         {
           path:"/sendParcel",
           element: <PrivateRoutes><SendParcel></SendParcel></PrivateRoutes>,
+          loader: () => fetch(`./warehouses.json`)
+        },
+        {
+          path:"/beARider",
+          element:<PrivateRoutes><BeARider></BeARider></PrivateRoutes>,
           loader: () => fetch(`./warehouses.json`)
         }
     ]
