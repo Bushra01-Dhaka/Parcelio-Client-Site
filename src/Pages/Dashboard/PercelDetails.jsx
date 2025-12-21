@@ -128,14 +128,14 @@ const ParcelDetails = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-end">
           {parcel.payment_status === "unpaid" && (
             <Link
-              to={`/payment/${parcel._id}`}
+              to={`/dashboard/payment/${id}`}
               className="btn text-secondary bg-primary font-bold"
             >
               Proceed to Payment
             </Link>
           )}
 
-          <Link to="/dashboard/my-parcels" className="btn btn-secondary text-primary font-bold">
+          <Link to="/dashboard/userParcels" className="btn btn-secondary text-primary font-bold">
             Back to Parcels
           </Link>
         </div>

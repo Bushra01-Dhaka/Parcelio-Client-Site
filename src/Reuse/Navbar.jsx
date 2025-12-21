@@ -79,10 +79,11 @@ const Navbar = () => {
         {user && (
           <div className="avatar avatar-online mr-2">
             <div className="w-12 rounded-full">
-              <img src= {user?.photoURL} />
+              <img src= {user?.photoURL}/>
             </div>
           </div>
         )}
+        
         {user ? (
           <Link
             onClick={handleLogOut}
@@ -96,10 +97,9 @@ const Navbar = () => {
             to="/login"
             className="btn btn-sm lg:btn-md  btn-primary text-secondary hover:font-bold rounded-2xl "
           >
-            Sign Up
+            Log in
           </Link>
         )}
-
       </div>
     </div>
   );

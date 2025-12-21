@@ -15,6 +15,7 @@ const Register = () => {
   const axiosPublic = useAxios();
   const axiosSecure = useAxiosSecure();
   const location = useLocation();
+   const from = location.state?.from || "/";
  
   const {
     register,
@@ -26,7 +27,7 @@ const Register = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-
+    
     createUser(data.email, data.password)
     .then(async (result) => {
         const loggedUser = result.user;
@@ -34,6 +35,7 @@ const Register = () => {
         
         // update user info in the database
         const userInfo = {
+          role: "user",
           email: data.email,
           name: data.name,
           created_at: new Date().toISOString(),
@@ -53,7 +55,7 @@ const Register = () => {
         updateUserProfile(userProfile)
         .then(() => {
           console.log("Profile Name and Picture updated");
-          refetch()
+          refetch;
         } )
         .catch(error => {
           console.error(error);
@@ -63,7 +65,8 @@ const Register = () => {
 
 
 
-        navigate("/")
+        navigate(from)
+        refetch();
     })
     .catch(error => console.error(error))
   };
@@ -88,6 +91,7 @@ const Register = () => {
           console.log(user);
           // update user info into db
           const userInfo = {
+            role:"user",
             email: user?.email,
             name: result?.user?.displayName,
             created_at: new Date().toISOString(),

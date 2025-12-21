@@ -38,6 +38,7 @@ const Login = () => {
           console.log(user);
           // update user info into db
           const userInfo = {
+            role:"user",
             email: user?.email,
             name: result?.user?.displayName,
             created_at: new Date().toISOString(),

@@ -16,11 +16,13 @@ const BeARider = () => {
     register,
     handleSubmit,
     watch,
+    refetch,
     formState: { errors },
   } = useForm();
 
   /* ================= REGION & DISTRICT ================= */
   const selectedRegion = watch("region");
+
 
   const regions = [...new Set(serviceCenters.map((c) => c.region))];
 
