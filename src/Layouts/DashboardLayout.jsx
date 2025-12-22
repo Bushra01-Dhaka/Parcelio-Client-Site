@@ -9,6 +9,7 @@ import {
   FaMotorcycle,
   FaUserClock,
 } from "react-icons/fa";
+import { FaUserShield } from "react-icons/fa6";
 
 const DashboardLayout = () => {
   return (
@@ -40,8 +41,8 @@ const DashboardLayout = () => {
           <div className="mx-2 flex-1 px-2 font-bold text-secondary">
             Dashboard
           </div>
-          <div className="hidden flex-none lg:block">
-            <ul className="menu menu-horizontal">
+          <div className="hidden flex-none lg:block ">
+            <ul className="menu menu-horizontal ">
               {/* Navbar menu content here */}
               <ParcelioLogo></ParcelioLogo>
 
@@ -94,24 +95,37 @@ const DashboardLayout = () => {
                   Update Profile
                 </NavLink>
               </li>
-               <li>
-            <NavLink
-              to="/dashboard/activeRiders"
-              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
-            >
-              <FaMotorcycle className="text-lg" />
-              Active Riders
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/pendingRiders"
-              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
-            >
-              <FaUserClock className="text-lg" />
-              Pending Riders
-            </NavLink>
-          </li>
+
+              {/* Rider Routes */}
+              <li>
+                <NavLink
+                  to="/dashboard/activeRiders"
+                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                >
+                  <FaMotorcycle className="text-lg" />
+                  Active Riders
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/pendingRiders"
+                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                >
+                  <FaUserClock className="text-lg" />
+                  Pending Riders
+                </NavLink>
+              </li>
+
+              {/* Admin Routes */}
+              <li>
+                <NavLink
+                  to="/dashboard/makeAdmin"
+                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                >
+                  <FaUserShield className="text-lg" />
+                  Manage Admins
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>
@@ -196,6 +210,17 @@ const DashboardLayout = () => {
             >
               <FaUserClock className="text-lg" />
               Pending Riders
+            </NavLink>
+          </li>
+
+          {/* Admin Routes */}
+          <li>
+            <NavLink
+              to="/dashboard/makeAdmin"
+              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+            >
+              <FaUserShield className="text-lg" />
+              Manage Admins
             </NavLink>
           </li>
         </ul>
