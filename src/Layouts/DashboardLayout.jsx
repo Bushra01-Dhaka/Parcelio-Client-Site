@@ -10,8 +10,10 @@ import {
   FaUserClock,
 } from "react-icons/fa";
 import { FaUserShield } from "react-icons/fa6";
+import useRole from "../Hooks/useRole";
 
 const DashboardLayout = () => {
+  const { role, isLoading } = useRole();
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -97,40 +99,44 @@ const DashboardLayout = () => {
               </li>
 
               {/* Rider Routes */}
-              <li>
-                <NavLink
-                  to="/dashboard/activeRiders"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
-                >
-                  <FaMotorcycle className="text-lg" />
-                  Active Riders
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/pendingRiders"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
-                >
-                  <FaUserClock className="text-lg" />
-                  Pending Riders
-                </NavLink>
-              </li>
-
-              {/* Admin Routes */}
-              <li>
-                <NavLink
-                  to="/dashboard/makeAdmin"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
-                >
-                  <FaUserShield className="text-lg" />
-                  Manage Admins
-                </NavLink>
-              </li>
+              {!isLoading && role === "admin" && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/activeRiders"
+                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                    >
+                      <FaMotorcycle className="text-lg" />
+                      Active Riders
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/pendingRiders"
+                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                    >
+                      <FaUserClock className="text-lg" />
+                      Pending Riders
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/makeAdmin"
+                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                    >
+                      <FaUserShield className="text-lg" />
+                      Manage Admins
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
         {/* Page content here */}
-        <Outlet></Outlet>
+      <div className=" lg:w-[100%] w-full min-h-screen bg-linear-to-br from-lime-100 to-primary">
+          <Outlet></Outlet>
+      </div>
         {/* Page content here */}
       </div>
 
@@ -194,35 +200,38 @@ const DashboardLayout = () => {
               Update Profile
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to="/dashboard/activeRiders"
-              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
-            >
-              <FaMotorcycle className="text-lg" />
-              Active Riders
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/pendingRiders"
-              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
-            >
-              <FaUserClock className="text-lg" />
-              Pending Riders
-            </NavLink>
-          </li>
 
-          {/* Admin Routes */}
-          <li>
-            <NavLink
-              to="/dashboard/makeAdmin"
-              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
-            >
-              <FaUserShield className="text-lg" />
-              Manage Admins
-            </NavLink>
-          </li>
+          {!isLoading && role === "admin" && (
+            <>
+              <li>
+                <NavLink
+                  to="/dashboard/activeRiders"
+                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                >
+                  <FaMotorcycle className="text-lg" />
+                  Active Riders
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/pendingRiders"
+                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                >
+                  <FaUserClock className="text-lg" />
+                  Pending Riders
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/makeAdmin"
+                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                >
+                  <FaUserShield className="text-lg" />
+                  Manage Admins
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>
