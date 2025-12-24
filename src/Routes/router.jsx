@@ -22,6 +22,7 @@ import ActiveRiders from "../Pages/Dashboard/ActiveRiders/ActiveRiders";
 import MakeAdmin from "../Pages/Dashboard/MakeAdmin/MakeAdmin";
 import ForbiddenPage from "../Pages/ForbiddenPage/ForbiddenPage";
 import AdminRoutes from "./AdminRoutes";
+import UpdateProfile from "../Pages/Dashboard/UpdateProfile/UpdatePofile";
 
 export const router = createBrowserRouter([
   {
@@ -100,6 +101,11 @@ export const router = createBrowserRouter([
       {
         path:"track",
         Component:TrackParcel,
+      },
+      {
+        path:"updateProfile",
+        Component:UpdateProfile,
+
       },
       {
         path:"pendingRiders",

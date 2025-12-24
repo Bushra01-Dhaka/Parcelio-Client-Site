@@ -90,11 +90,11 @@ const DashboardLayout = () => {
 
               <li>
                 <NavLink
-                  to="/dashboard/profile"
+                  to="/dashboard/updateProfile"
                   className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
                 >
                   <FaUserEdit className="text-lg" />
-                  Update Profile
+                  My Profile
                 </NavLink>
               </li>
 
@@ -193,11 +193,11 @@ const DashboardLayout = () => {
 
           <li>
             <NavLink
-              to="/dashboard/profile"
+              to="/dashboard/updateProfile"
               className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
             >
               <FaUserEdit className="text-lg" />
-              Update Profile
+              My Profile
             </NavLink>
           </li>
 
