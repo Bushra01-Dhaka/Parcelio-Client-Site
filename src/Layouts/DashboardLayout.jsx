@@ -9,7 +9,7 @@ import {
   FaMotorcycle,
   FaUserClock,
 } from "react-icons/fa";
-import { FaUserShield } from "react-icons/fa6";
+import { FaRoute, FaUserShield } from "react-icons/fa6";
 import useRole from "../Hooks/useRole";
 
 const DashboardLayout = () => {
@@ -103,6 +103,15 @@ const DashboardLayout = () => {
                 <>
                   <li>
                     <NavLink
+                      to="/dashboard/assign-rider"
+                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                    >
+                      <FaRoute className="text-lg" />
+                      Assign Rider
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
                       to="/dashboard/activeRiders"
                       className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
                     >
@@ -134,9 +143,9 @@ const DashboardLayout = () => {
           </div>
         </div>
         {/* Page content here */}
-      <div className=" lg:w-[100%] w-full min-h-screen bg-linear-to-br from-lime-100 to-primary">
+        <div className=" lg:w-[100%] w-full min-h-screen bg-linear-to-br from-lime-100 to-primary">
           <Outlet></Outlet>
-      </div>
+        </div>
         {/* Page content here */}
       </div>
 
@@ -203,6 +212,15 @@ const DashboardLayout = () => {
 
           {!isLoading && role === "admin" && (
             <>
+              <li>
+                <NavLink
+                  to="/dashboard/assign-rider"
+                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                >
+                  <FaRoute className="text-lg" />
+                  Assign Rider
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   to="/dashboard/activeRiders"
