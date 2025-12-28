@@ -3,7 +3,7 @@ import serviceImg from "../../assets/service.png";
 
 const OurServices = () => {
   const [services, setServices] = useState([]);
-   const [isHovered, setIsHovered] = useState(false); // 🌟 NEW
+  const [isHovered, setIsHovered] = useState(false); // 🌟 NEW
 
   useEffect(() => {
     fetch(`services.json`)
@@ -15,16 +15,19 @@ const OurServices = () => {
 
   console.log("Our Services", services);
   return (
-    <div className={`flex justify-center lg:max-w-screen-2xl mx-auto items-center min-h-[100vh] lg:py-20 px-8 lg:px-0
+    <div
+      className={`flex justify-center lg:max-w-screen-2xl mx-auto items-center min-h-[100vh] lg:py-20 px-8 lg:px-0
       transition-all duration-500 
-      ${isHovered ? "bg-primary" : ""}`}>
-      <div className="bg-primary p-4 lg:p-10 rounded-md ">
-
-        <div 
-        data-aos="zoom-in"
-            data-aos-delay="50"
-            data-aos-duration="1000"
-        className="text-center pt-10">
+     `}
+    >
+      {/* ${isHovered ? "bg-primary" : ""} */}
+      <div className="relative bg-primary p-4 lg:p-10 rounded-md ">
+        <div
+          data-aos="zoom-in"
+          data-aos-delay="50"
+          data-aos-duration="1000"
+          className="text-center pt-10"
+        >
           <h2 className="text-4xl text-secondary lg:text-6xl font-extrabold py-4">
             Our Services
           </h2>
@@ -42,10 +45,10 @@ const OurServices = () => {
               key={index}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-               data-aos="zoom-up"
-            data-aos-offset="200"
-            data-aos-delay="100"
-            data-aos-duration="1000"
+              data-aos="zoom-up"
+              data-aos-offset="200"
+              data-aos-delay="100"
+              data-aos-duration="1000"
               className="lg:w-[350px] text-secondary text-center bg-slate-50 rounded-xl shadow-2xl p-4 hover:bg-primary cursor-pointer"
             >
               <img
@@ -60,6 +63,24 @@ const OurServices = () => {
             </div>
           ))}
         </div>
+
+        {/* wave */}
+      <div class="ourServices-wave">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z"
+            class="shape-fill"
+          ></path>
+        </svg>
+      </div>
+
+
+
       </div>
     </div>
   );

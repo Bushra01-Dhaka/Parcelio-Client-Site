@@ -19,3 +19,25 @@
   font-style: normal;
 }
 
+
+
+/* our services wave */
+.ourServices-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.ourServices-wave svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+}
+
+.ourServices-wave .shape-fill {
+    fill: #FFFFFF;
+}

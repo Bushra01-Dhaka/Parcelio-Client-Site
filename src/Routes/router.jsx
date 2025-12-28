@@ -24,6 +24,8 @@ import ForbiddenPage from "../Pages/ForbiddenPage/ForbiddenPage";
 import AdminRoutes from "./AdminRoutes";
 import UpdateProfile from "../Pages/Dashboard/UpdateProfile/UpdatePofile";
 import AssignRider from "../Pages/Dashboard/AssignRiders/AssignRider";
+import PendingDeliveries from "../Pages/Dashboard/PendingDeliveries/PendingDeliveries";
+import RiderRoutes from "./RiderRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -123,6 +125,11 @@ export const router = createBrowserRouter([
       {
         path:"assign-rider",
         element:<AdminRoutes><AssignRider></AssignRider></AdminRoutes>
+      },
+      // rider routes
+      {
+        path:"pending-delivery",
+        element:<RiderRoutes><PendingDeliveries></PendingDeliveries></RiderRoutes>
       }
       
     ]

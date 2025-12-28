@@ -98,7 +98,22 @@ const DashboardLayout = () => {
                 </NavLink>
               </li>
 
-              {/* Rider Routes */}
+              {/* Riders Routes */}
+              {!isLoading && role === "rider" && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/pending-delivery"
+                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                    >
+                      <FaTruck className="text-lg" />
+                      Pending Delivery
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+              {/* Admin Routes */}
               {!isLoading && role === "admin" && (
                 <>
                   <li>
@@ -210,6 +225,24 @@ const DashboardLayout = () => {
             </NavLink>
           </li>
 
+           {/* Riders Routes */}
+              {!isLoading && role === "rider" && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/pending-delivery"
+                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                    >
+                      <FaTruck className="text-lg" />
+                      Pending Delivery
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+
+
+        {/* Admin Routes  */}
           {!isLoading && role === "admin" && (
             <>
               <li>
