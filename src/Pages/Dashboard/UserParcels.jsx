@@ -77,6 +77,7 @@ const UserParcels = () => {
               <th>Created</th>
               <th>Cost</th>
               <th>Payment</th>
+              <th>Status</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
@@ -91,7 +92,7 @@ const UserParcels = () => {
                   {new Date(parcel.creation_date).toLocaleDateString("en-GB")}
                 </td>
                 <td>৳{parcel.cost}</td>
-                <td className="mx-auto text-center font-bold text-secondary">
+                <td className="mx-auto  text-center font-bold text-secondary">
                   <span
                     className={`badge ${
                       parcel.payment_status === "paid"
@@ -101,6 +102,9 @@ const UserParcels = () => {
                   >
                     {parcel.payment_status}
                   </span>
+                </td>
+                <td>
+                 <button className="p-1 rounded-xl mx-auto text-center text-secondary bg-primary font-bold"> {parcel?.delivery_status}</button>
                 </td>
                 <td className="text-center space-x-2">
                   <Link

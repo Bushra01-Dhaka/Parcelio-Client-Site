@@ -10,7 +10,7 @@ import {
   FaUserClock,
   FaCheckCircle,
 } from "react-icons/fa";
-import { FaRoute, FaUserShield } from "react-icons/fa6";
+import { FaMoneyBillWave, FaRoute, FaUserShield } from "react-icons/fa6";
 import useRole from "../Hooks/useRole";
 
 const DashboardLayout = () => {
@@ -118,6 +118,15 @@ const DashboardLayout = () => {
                     >
                       <FaCheckCircle className="text-lg" />
                       Completed Deliveries
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/my-earnings"
+                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                    >
+                      <FaMoneyBillWave className="text-lg" />
+                      My Earnings
                     </NavLink>
                   </li>
                 </>
@@ -255,6 +264,15 @@ const DashboardLayout = () => {
                 >
                   <FaCheckCircle className="text-lg" />
                   Completed Deliveries
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/my-earnings"
+                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                >
+                  <FaMoneyBillWave className="text-lg" />
+                  My Earnings
                 </NavLink>
               </li>
             </>
