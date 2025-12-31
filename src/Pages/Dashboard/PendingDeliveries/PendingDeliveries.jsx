@@ -8,22 +8,27 @@ import useTracking from "../../../Hooks/useTracking";
 const PendingDeliveries = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const { addTracking } = useTracking();
+
   const [selectedParcel, setSelectedParcel] = useState(null);
-    const { addTracking } = useTracking();
+
   const {
     data: parcels = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["rider-parcels"],
+    queryKey: ["rider-parcels", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/rider/parcels?email=${user?.email}`);
+      const res = await axiosSecure.get(
+        `/rider/parcels?email=${user?.email}`
+      );
       return res.data;
     },
   });
 
-  const updateStatus = async (parcelId, status) => {
+  // ================= UPDATE STATUS + TRACKING =================
+  const updateStatus = async (parcel, status) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
       text: `Mark parcel as ${status.replace("_", " ")}?`,
@@ -35,18 +40,40 @@ const PendingDeliveries = () => {
     if (!confirm.isConfirmed) return;
 
     const res = await axiosSecure.patch(
-      `/parcels/${parcelId}/status`,
+      `/parcels/${parcel._id}/status`,
       { status }
     );
 
     if (res.data.modifiedCount) {
-      Swal.fire("Success!", "Status updated", "success");
+
+      // 🔹 TRACKING WHEN PARCEL IS PICKED UP
+      if (status === "in_transit") {
+        await addTracking({
+          tracking_id: parcel.tracking_id,
+          step: "parcel_picked_up",
+          message: "Rider has picked up the parcel",
+          location: parcel.senderCenter,
+          updated_by: user?.email,
+        });
+      }
+
+      // 🔹 TRACKING WHEN PARCEL IS DELIVERED
+      if (status === "delivered") {
+        await addTracking({
+          tracking_id: parcel.tracking_id,
+          step: "parcel_delivered",
+          message: "Parcel has been delivered successfully",
+          location: parcel.receiverCenter,
+          updated_by: user?.email,
+        });
+      }
+
+      Swal.fire("Success!", "Status updated successfully", "success");
       refetch();
     }
-
-
   };
 
+  // ================= LOADING =================
   if (isLoading) {
     return (
       <div className="flex justify-center py-20">
@@ -81,7 +108,9 @@ const PendingDeliveries = () => {
               <tr key={parcel._id}>
                 <td>{index + 1}</td>
 
-                <td className="font-semibold">{parcel.tracking_id}</td>
+                <td className="font-semibold">
+                  {parcel.tracking_id}
+                </td>
 
                 <td>
                   <p className="font-medium">{parcel.senderName}</p>
@@ -110,7 +139,9 @@ const PendingDeliveries = () => {
                     className={`badge font-bold ${
                       parcel.delivery_status === "rider_assigned"
                         ? "badge-warning"
-                        : "badge-info"
+                        : parcel.delivery_status === "in_transit"
+                        ? "badge-info"
+                        : "badge-success"
                     }`}
                   >
                     {parcel.delivery_status}
@@ -121,7 +152,7 @@ const PendingDeliveries = () => {
                   {parcel.delivery_status === "rider_assigned" && (
                     <button
                       onClick={() =>
-                        updateStatus(parcel._id, "in_transit")
+                        updateStatus(parcel, "in_transit")
                       }
                       className="btn text-secondary font-bold btn-xs btn-primary"
                     >
@@ -132,7 +163,7 @@ const PendingDeliveries = () => {
                   {parcel.delivery_status === "in_transit" && (
                     <button
                       onClick={() =>
-                        updateStatus(parcel._id, "delivered")
+                        updateStatus(parcel, "delivered")
                       }
                       className="btn text-secondary font-bold btn-xs btn-success"
                     >
@@ -170,24 +201,57 @@ const PendingDeliveries = () => {
             </h3>
 
             <div className="space-y-2 text-sm">
-              <p><strong>Tracking ID:</strong> {selectedParcel.tracking_id}</p>
-              <p><strong>Title:</strong> {selectedParcel.title}</p>
-              <p><strong>Type:</strong> {selectedParcel.parcelType}</p>
-              <p><strong>Cost:</strong> ৳{selectedParcel.cost}</p>
+              <p>
+                <strong>Tracking ID:</strong>{" "}
+                {selectedParcel.tracking_id}
+              </p>
+              <p>
+                <strong>Title:</strong> {selectedParcel.title}
+              </p>
+              <p>
+                <strong>Type:</strong> {selectedParcel.parcelType}
+              </p>
+              <p>
+                <strong>Cost:</strong> ৳{selectedParcel.cost}
+              </p>
 
               <hr />
 
-              <p><strong>Sender:</strong> {selectedParcel.senderName}</p>
-              <p><strong>Sender Phone:</strong> {selectedParcel.senderContact}</p>
-              <p><strong>Pickup Address:</strong> {selectedParcel.senderAddress}</p>
-              <p><strong>Pickup Instruction:</strong> {selectedParcel.pickupInstruction}</p>
+              <p>
+                <strong>Sender:</strong>{" "}
+                {selectedParcel.senderName}
+              </p>
+              <p>
+                <strong>Sender Phone:</strong>{" "}
+                {selectedParcel.senderContact}
+              </p>
+              <p>
+                <strong>Pickup Address:</strong>{" "}
+                {selectedParcel.senderAddress}
+              </p>
+              <p>
+                <strong>Pickup Instruction:</strong>{" "}
+                {selectedParcel.pickupInstruction}
+              </p>
 
               <hr />
 
-              <p><strong>Receiver:</strong> {selectedParcel.receiverName}</p>
-              <p><strong>Receiver Phone:</strong> {selectedParcel.receiverContact}</p>
-              <p><strong>Delivery Address:</strong> {selectedParcel.receiverAddress}</p>
-              <p><strong>Delivery Instruction:</strong> {selectedParcel.deliveryInstruction}</p>
+              <p>
+                <strong>Receiver:</strong>{" "}
+                {selectedParcel.receiverName}
+              </p>
+              <p>
+                <strong>Receiver Phone:</strong>{" "}
+                {selectedParcel.receiverContact}
+              </p>
+              <p>
+                <strong>Delivery Address:</strong>{" "}
+                {selectedParcel.receiverAddress}
+              </p>
+              <p>
+                <strong>Delivery Instruction:</strong>{" "}
+                {selectedParcel.deliveryInstruction}
+              </p>
             </div>
 
             <div className="modal-action">

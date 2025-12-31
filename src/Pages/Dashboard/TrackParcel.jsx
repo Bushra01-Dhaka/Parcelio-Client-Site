@@ -1,105 +1,116 @@
-import { useParams, useNavigate } from "react-router";
-import { useState, useEffect } from "react";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import Swal from "sweetalert2";
-import UpdateTracking from "./UpdateTracking/UpdateTracking";
+import { useState } from "react";
+import { format } from "date-fns";
+import useAxios from "../../Hooks/useAxios";
 
 const TrackParcel = () => {
-  const { trackingId } = useParams();
-  const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxios();
 
-  const [inputId, setInputId] = useState(trackingId || "");
-  const [parcel, setParcel] = useState(null);
-  const [updates, setUpdates] = useState([]);
+  const [trackingId, setTrackingId] = useState("");
+  const [trackingData, setTrackingData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const fetchTracking = async (id) => {
+  const handleTrack = async () => {
+    if (!trackingId) return;
+
+    setLoading(true);
+    setError("");
+    setTrackingData([]);
+
     try {
-      const parcelRes = await axiosSecure.get(`/parcel-by-tracking/${id}`);
-      const trackingRes = await axiosSecure.get(`/tracking/${id}`);
-
-      setParcel(parcelRes.data);
-      setUpdates(trackingRes.data);
-    } catch {
-      Swal.fire("Invalid Tracking ID", "Please check and try again", "error");
-      setParcel(null);
-      setUpdates([]);
+      const res = await axiosPublic.get(
+        `/tracking/${trackingId}`
+      );
+      setTrackingData(res.data);
+    } catch (err) {
+      setError("No tracking information found");
+    } finally {
+      setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    if (trackingId) {
-      fetchTracking(trackingId);
-    }
-  }, [trackingId]);
-
-  const handleSearch = () => {
-    if (!inputId) return;
-    navigate(`/track/${inputId}`);
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h2 className="text-3xl font-bold text-center mb-6">
-        📦 Track Your Parcel
-      </h2>
+    <div className="min-h-screen  py-10 px-4">
+      <div className="max-w-3xl mx-auto bg-base-100 rounded-xl shadow p-6">
 
-      {/* Search Box */}
-      <div className="flex gap-2 mb-6">
-        <input
-          type="text"
-          value={inputId}
-          onChange={(e) => setInputId(e.target.value)}
-          placeholder="Enter Tracking ID"
-          className="input input-bordered w-full"
-        />
-        <button onClick={handleSearch} className="btn btn-primary">
-          Track
-        </button>
-      </div>
+        <h2 className="text-3xl font-bold text-center mb-6">
+          Track Your Parcel
+        </h2>
 
-      {/* Parcel Summary */}
-      {parcel && (
-        <div className="card bg-base-100 shadow p-4 mb-6">
-          <h3 className="font-semibold text-lg mb-2">Parcel Info</h3>
-          <p>
-            <strong>Tracking ID:</strong> {parcel.tracking_id}
-          </p>
-          <p>
-            <strong>Status:</strong> {parcel.delivery_status}
-          </p>
-          <p>
-            <strong>Payment:</strong> {parcel.payment_status}
-          </p>
+        {/* ================= SEARCH BOX ================= */}
+        <div className="flex gap-3 mb-8">
+          <input
+            type="text"
+            placeholder="Enter Tracking ID"
+            value={trackingId}
+            onChange={(e) => setTrackingId(e.target.value)}
+            className="input input-bordered w-full"
+          />
+          <button
+            onClick={handleTrack}
+            className="btn btn-primary text-secondary font-bold"
+          >
+            Track
+          </button>
         </div>
-      )}
 
-      {/* Tracking Timeline */}
-      {updates.length > 0 && (
-        <ul className="timeline timeline-vertical">
-          {updates.map((u, index) => (
-            <li key={index}>
-              <div className="timeline-start text-sm">
-                {new Date(u.createdAt).toLocaleString()}
-              </div>
+        {/* ================= LOADING ================= */}
+        {loading && (
+          <div className="flex justify-center py-6">
+            <span className="loading loading-spinner loading-lg"></span>
+          </div>
+        )}
 
-              <div className="timeline-middle">🚚</div>
+        {/* ================= ERROR ================= */}
+        {error && (
+          <p className="text-center text-error font-medium">
+            {error}
+          </p>
+        )}
 
-              <div className="timeline-end timeline-box">
-                <p className="font-semibold capitalize">
-                  {u.step.replace("_", " ")}
-                </p>
-                <p className="text-sm text-gray-500">{u.location}</p>
-                <p className="text-xs">{u.message}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+        {/* ================= TIMELINE ================= */}
+        {trackingData.length > 0 && (
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold mb-4">
+              Tracking Timeline
+            </h3>
 
-      <br />
-      <br />
-      {/* <UpdateTracking/> */}
+            <ul className="timeline timeline-vertical">
+              {trackingData.map((track, index) => (
+                <li key={track._id}>
+                  <div className="timeline-start text-xs opacity-70">
+                    {format(
+                      new Date(track.createdAt),
+                      "dd MMM yyyy, hh:mm a"
+                    )}
+                  </div>
+
+                  <div className="timeline-middle">
+                    <div className="w-3 h-3 bg-primary rounded-full"></div>
+                  </div>
+
+                  <div className="timeline-end mb-6">
+                    <p className="font-semibold capitalize">
+                      {track.step.replace("_", " ")}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {track.message}
+                    </p>
+                    {track.location && (
+                      <p className="text-xs text-gray-400">
+                        📍 {track.location}
+                      </p>
+                    )}
+                  </div>
+
+                  {index < trackingData.length - 1 && <hr />}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+      </div>
     </div>
   );
 };

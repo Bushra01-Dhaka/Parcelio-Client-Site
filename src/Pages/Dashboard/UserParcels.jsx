@@ -72,6 +72,7 @@ const UserParcels = () => {
           <thead className="bg-base-200">
             <tr>
               <th>#</th>
+              <th>Track Id</th>
               <th>Type</th>
               <th>Title</th>
               <th>Created</th>
@@ -86,6 +87,7 @@ const UserParcels = () => {
             {parcels.map((parcel, index) => (
               <tr key={parcel._id}>
                 <td>{index + 1}</td>
+                <td>{parcel.tracking_id}</td>
                 <td className="capitalize">{parcel.parcelType}</td>
                 <td className="capitalize max-w-[180px] truncate">{parcel.title}</td>
                 <td>
