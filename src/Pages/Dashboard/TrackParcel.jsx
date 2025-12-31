@@ -62,9 +62,15 @@ const TrackParcel = () => {
       {parcel && (
         <div className="card bg-base-100 shadow p-4 mb-6">
           <h3 className="font-semibold text-lg mb-2">Parcel Info</h3>
-          <p><strong>Tracking ID:</strong> {parcel.tracking_id}</p>
-          <p><strong>Status:</strong> {parcel.delivery_status}</p>
-          <p><strong>Payment:</strong> {parcel.payment_status}</p>
+          <p>
+            <strong>Tracking ID:</strong> {parcel.tracking_id}
+          </p>
+          <p>
+            <strong>Status:</strong> {parcel.delivery_status}
+          </p>
+          <p>
+            <strong>Payment:</strong> {parcel.payment_status}
+          </p>
         </div>
       )}
 
@@ -74,24 +80,26 @@ const TrackParcel = () => {
           {updates.map((u, index) => (
             <li key={index}>
               <div className="timeline-start text-sm">
-                {new Date(u.updatedAt).toLocaleString()}
+                {new Date(u.createdAt).toLocaleString()}
               </div>
+
               <div className="timeline-middle">🚚</div>
+
               <div className="timeline-end timeline-box">
-                <p className="font-semibold">{u.status}</p>
+                <p className="font-semibold capitalize">
+                  {u.step.replace("_", " ")}
+                </p>
                 <p className="text-sm text-gray-500">{u.location}</p>
-                {u.note && <p className="text-xs">{u.note}</p>}
+                <p className="text-xs">{u.message}</p>
               </div>
             </li>
           ))}
         </ul>
       )}
 
-
-
       <br />
       <br />
-      <UpdateTracking/>
+      {/* <UpdateTracking/> */}
     </div>
   );
 };

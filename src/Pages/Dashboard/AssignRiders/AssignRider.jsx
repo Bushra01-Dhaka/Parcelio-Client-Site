@@ -2,12 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useTracking from "../../../Hooks/useTracking";
+import useAuth from "../../../Hooks/useAuth";
 
 const AssignRider = () => {
   const axiosSecure = useAxiosSecure();
   const modalRef = useRef();
 
   const [selectedParcel, setSelectedParcel] = useState(null);
+  const { addTracking } = useTracking();
+  const {user} = useAuth();
 
   /* ================= LOAD PARCELS ================= */
   const {
@@ -25,10 +29,7 @@ const AssignRider = () => {
   });
 
   /* ================= LOAD RIDERS (DYNAMIC) ================= */
-  const {
-    data: riders = [],
-    isLoading: ridersLoading,
-  } = useQuery({
+  const { data: riders = [], isLoading: ridersLoading } = useQuery({
     queryKey: ["riders", selectedParcel?.receiverCenter],
     enabled: !!selectedParcel,
     queryFn: async () => {
@@ -59,6 +60,15 @@ const AssignRider = () => {
     );
 
     if (res.data.modifiedCount) {
+      // 🔹 ADD TRACKING EVENT (STEP 3)
+      await addTracking({
+        tracking_id: selectedParcel.tracking_id,
+        step: "rider_assigned",
+        message: `Rider ${rider.name} assigned to pick up the parcel`,
+        location: selectedParcel.senderCenter, // pickup location
+        updated_by: user?.email,
+      });
+
       Swal.fire({
         icon: "success",
         title: "Rider Assigned",
@@ -83,9 +93,7 @@ const AssignRider = () => {
 
   return (
     <div className="p-4 md:p-8">
-      <h2 className="text-3xl md:text-4xl font-bold mb-8">
-        Assign Rider
-      </h2>
+      <h2 className="text-3xl md:text-4xl font-bold mb-8">Assign Rider</h2>
 
       {/* ================= PARCEL TABLE ================= */}
       <div className="overflow-x-auto bg-base-100 rounded-xl shadow">
@@ -176,9 +184,7 @@ const AssignRider = () => {
                 >
                   <div>
                     <p className="font-semibold">{rider.name}</p>
-                    <p className="text-xs text-gray-500">
-                      {rider.phone}
-                    </p>
+                    <p className="text-xs text-gray-500">{rider.phone}</p>
                   </div>
 
                   <button

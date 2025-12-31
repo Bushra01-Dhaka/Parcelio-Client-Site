@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import useTracking from "../../../Hooks/useTracking";
 
 const PaymentForm = () => {
   const stripe = useStripe();
@@ -16,6 +17,7 @@ const PaymentForm = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const { addTracking } = useTracking();
 
   const {
     data: parcel = [],
@@ -108,8 +110,18 @@ const PaymentForm = () => {
           paymentMethod: result.paymentIntent.payment_method_types,
           paid_date: new Date().toISOString(),
         };
+
         const paymentRes = await axiosSecure.post(`/payments`, paymentData);
         if (paymentRes.data.insertedId) {
+          // 🔹 ADD TRACKING AFTER PAYMENT SUCCESS
+          await addTracking({
+            tracking_id: parcel.tracking_id, // IMPORTANT
+            step: "payment_completed",
+            message: `Paid by ${user?.displayName}`,
+            location: "Online Payment",
+            updated_by: user?.email,
+          });
+
           Swal.fire({
             icon: "success",
             title: "Payment Successful 🎉",

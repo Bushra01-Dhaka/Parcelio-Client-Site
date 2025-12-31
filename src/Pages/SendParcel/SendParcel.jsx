@@ -3,6 +3,7 @@ import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useTracking from "../../Hooks/useTracking";
 
 // Tracking Id generator
 const generateTrackingId = () => {
@@ -12,7 +13,6 @@ const generateTrackingId = () => {
 
   return `${prefix}-${date}-${random}`;
 };
-
 
 /* ================= COST CALCULATION ================= */
 const calculateCost = (data) => {
@@ -82,6 +82,8 @@ const SendParcel = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  const { addTracking } = useTracking();
 
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -175,9 +177,19 @@ const SendParcel = () => {
 
         console.log("Saving Parcel:", parcelData);
 
-        axiosSecure.post(`/parcels`, parcelData).then((res) => {
+        axiosSecure.post(`/parcels`, parcelData).then(async (res) => {
           console.log(res.data);
+
           if (res.data.insertedId) {
+            // 🔹 ADD FIRST TRACKING EVENT HERE
+            await addTracking({
+              tracking_id: parcelData.tracking_id,
+              step: "parcel_created",
+              message: `Parcel has been created successfully by ${user?.displayName}`,
+              location: parcelData.senderCenter,
+              updated_by: user?.email,
+            });
+
             Swal.fire({
               icon: "success",
               title: "Parcel Created!",
