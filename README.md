@@ -21,14 +21,14 @@ rider assignment, live tracking, and role-based dashboards.
 
 - Create parcels with dynamic pricing
 
-- Transparent price calculation based on:
+#### Transparent price calculation based on:
 
 - Parcel type
 
 - Weight
 
 - Within / Outside city
-
+##
 - Secure online payment using Stripe
 
 - Track parcels using Tracking ID
@@ -51,11 +51,11 @@ rider assignment, live tracking, and role-based dashboards.
 
 - Delivered
 
-### Earnings dashboard:
+### 💵Earnings dashboard:
 
-Today / Week / Month / Year
+- Today / Week / Month / Year
 
-Total, Cashed Out & Pending earnings
+- Total, Cashed Out & Pending earnings
 
 
 
@@ -96,10 +96,13 @@ Total, Cashed Out & Pending earnings
 
 
 ##  💰 Pricing Logic
-Parcel Type	Weight	Within City	Outside City
-Document	Any	৳60	৳80
-Non-Document	Up to 3kg	৳110	৳150
-Non-Document	>3kg	+৳40/kg	+৳40/kg + ৳40
+## 📦 Pricing Details
+
+| Parcel Type     | Weight       | Within City | Outside City |
+|-----------------|--------------|-------------|--------------|
+| Document        | Any          | ৳60         | ৳80          |
+| Non-Document    | Up to 3kg    | ৳110        | ৳150         |
+| Non-Document    | Above 3kg    | +৳40 / kg   | +৳40 / kg + ৳40 |
 
 
 
