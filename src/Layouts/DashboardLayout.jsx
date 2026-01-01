@@ -62,7 +62,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/userParcels"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <TbTruckDelivery className="text-xl" />
                   My Parcel
@@ -72,7 +75,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/paymentHistory"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <FaHistory className="text-lg" />
                   Payment History
@@ -82,7 +88,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/track"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <FaTruck className="text-lg" />
                   Track Your Parcel
@@ -92,7 +101,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/updateProfile"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <FaUserEdit className="text-lg" />
                   My Profile
@@ -105,7 +117,10 @@ const DashboardLayout = () => {
                   <li>
                     <NavLink
                       to="/dashboard/pending-delivery"
-                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                      }
                     >
                       <FaTruck className="text-lg" />
                       Pending Delivery
@@ -114,7 +129,10 @@ const DashboardLayout = () => {
                   <li>
                     <NavLink
                       to="/dashboard/completed-delivery"
-                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                      }
                     >
                       <FaCheckCircle className="text-lg" />
                       Completed Deliveries
@@ -123,7 +141,10 @@ const DashboardLayout = () => {
                   <li>
                     <NavLink
                       to="/dashboard/my-earnings"
-                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                      }
                     >
                       <FaMoneyBillWave className="text-lg" />
                       My Earnings
@@ -138,7 +159,10 @@ const DashboardLayout = () => {
                   <li>
                     <NavLink
                       to="/dashboard/assign-rider"
-                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                      }
                     >
                       <FaRoute className="text-lg" />
                       Assign Rider
@@ -147,7 +171,10 @@ const DashboardLayout = () => {
                   <li>
                     <NavLink
                       to="/dashboard/activeRiders"
-                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                      }
                     >
                       <FaMotorcycle className="text-lg" />
                       Active Riders
@@ -156,7 +183,10 @@ const DashboardLayout = () => {
                   <li>
                     <NavLink
                       to="/dashboard/pendingRiders"
-                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                      }
                     >
                       <FaUserClock className="text-lg" />
                       Pending Riders
@@ -165,7 +195,10 @@ const DashboardLayout = () => {
                   <li>
                     <NavLink
                       to="/dashboard/makeAdmin"
-                      className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                      }
                     >
                       <FaUserShield className="text-lg" />
                       Manage Admins
@@ -197,7 +230,10 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard"
-              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+              }
             >
               <RxDashboard className="text-lg" />
               Dashboard
@@ -207,7 +243,10 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard/userParcels"
-              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+              }
             >
               <TbTruckDelivery className="text-xl" />
               My Parcel
@@ -217,7 +256,10 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard/paymentHistory"
-              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+              }
             >
               <FaHistory className="text-lg" />
               Payment History
@@ -227,7 +269,10 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard/track"
-              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+              }
             >
               <FaTruck className="text-lg" />
               Track Your Parcel
@@ -237,7 +282,10 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard/updateProfile"
-              className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+              }
             >
               <FaUserEdit className="text-lg" />
               My Profile
@@ -250,7 +298,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/pending-delivery"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <FaTruck className="text-lg" />
                   Pending Delivery
@@ -260,7 +311,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/completed-delivery"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <FaCheckCircle className="text-lg" />
                   Completed Deliveries
@@ -269,7 +323,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/my-earnings"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <FaMoneyBillWave className="text-lg" />
                   My Earnings
@@ -284,7 +341,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/assign-rider"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <FaRoute className="text-lg" />
                   Assign Rider
@@ -293,7 +353,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/activeRiders"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <FaMotorcycle className="text-lg" />
                   Active Riders
@@ -302,7 +365,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/pendingRiders"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <FaUserClock className="text-lg" />
                   Pending Riders
@@ -311,7 +377,10 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/makeAdmin"
-                  className="flex items-center gap-3 text-secondary py-2 hover:bg-primary mb-4 mx-6 hover:font-bold"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 mb-4 mx-6 text-secondary hover:font-bold
+     ${isActive ? "bg-primary font-bold" : "hover:bg-primary"}`
+                  }
                 >
                   <FaUserShield className="text-lg" />
                   Manage Admins

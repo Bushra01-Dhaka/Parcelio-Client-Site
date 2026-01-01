@@ -6,6 +6,8 @@ This project focuses on clean UX, transparent pricing, and scalable backend arch
 
 ## 🔗 Live Links
 
+🚚 Parcelio Live Link:  https://parcelio-257c8.web.app
+
 🌐 Client: https://github.com/Bushra01-Dhaka/Parcelio-Client-Site
 
 🛠 Server: https://github.com/Bushra01-Dhaka/Parcelio-Server_Site
