@@ -206,7 +206,12 @@ const SendParcel = () => {
 
   return (
     <div className="min-h-screen bg-base-300 py-10 px-4">
-      <div className="max-w-4xl mx-auto bg-base-100 shadow-xl rounded-xl p-6 lg:p-10 text-secondary">
+      <div 
+      data-aos="fade-in"
+      data-aos-offset="200"
+      data-aos-delay="100"
+      data-aos-duration="1000"
+      className="max-w-4xl mx-auto bg-base-100 shadow-xl rounded-xl p-6 lg:p-10 text-secondary">
         {/* ================= HEADER ================= */}
         <h1 className="text-3xl lg:text-5xl font-bold text-center">
           Send A Parcel

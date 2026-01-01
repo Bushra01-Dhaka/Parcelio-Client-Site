@@ -29,6 +29,7 @@ import RiderRoutes from "./RiderRoutes";
 import CompletedDeliveries from "../Pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 import MyEarnings from "../Pages/Dashboard/MyEarnings/MyEarnings";
 import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
+import Pricing from "../Pages/Pricing/Pricing";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
         {
           path:"/coverage",
           Component: Coverage,
+        },
+        {
+          path:"/pricing",
+          Component: Pricing,
         },
         {
           path:"/sendParcel",

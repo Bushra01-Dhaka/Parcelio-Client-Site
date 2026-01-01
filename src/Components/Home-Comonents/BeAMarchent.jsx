@@ -8,8 +8,7 @@ const BeAMarchent = () => {
             data-aos-delay="50"
             data-aos-duration="1000"
     className="bg-[#016A70]
-  bg-[url('/src/assets/shadow.png')]
-  bg-no-repeat
+ 
  
   rounded-2xl
   shadow-primary
@@ -28,14 +27,14 @@ const BeAMarchent = () => {
           </h2>
           <p className="py-4 lg:w-[500px] text-secondary font-semibold">
             We offer the lowest delivery charge with the highest value along
-            with 100% safety of your product. Pathao courier delivers your
+            with 100% safety of your product. Parcelio courier delivers your
             parcels in every corner of Bangladesh right on time.
           </p>
-          <div className="py-6 font-semibold">
-            <a href="/" className="btn hover:shadow-md hover:shadow-primary font-semibold btn-primary text-secondary rounded-2xl mr-4 mb-4 lg:mb-0">
+          <div className="py-6 font-bold">
+            <a href="/sendParcel" className="btn hover:shadow-md hover:shadow-primary font-semibold btn-primary text-secondary rounded-2xl mr-4 mb-4 lg:mb-0">
               Become a Merchant
             </a>
-            <a className="btn font-semibold btn-primary hover:btn-primary btn-outline hover:text-secondary hover:bg-primary rounded-2xl  ">
+            <a className="btn font-bold btn-primary hover:btn-primary btn-outline hover:text-secondary hover:bg-primary rounded-2xl  ">
               Earn With Parcelio Courier
             </a>
           </div>

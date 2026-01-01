@@ -20,6 +20,10 @@ const Navbar = () => {
         {" "}
         <NavLink to="/aboutUs">About Us</NavLink>
       </li>
+        <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
+        {" "}
+        <NavLink to="/pricing">Pricing</NavLink>
+      </li>
       <li className="py-2 lg:py-0 text-2xl text-secondary font-semibold lg:text-[16px]">
         <NavLink to="/beARider">Be A Rider</NavLink>
       </li>

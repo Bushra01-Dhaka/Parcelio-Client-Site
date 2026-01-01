@@ -211,7 +211,12 @@ const BeARider = () => {
 
       {/* right */}
       <div className="flex-1">
-        <img className="w-[500px] h-[400px]" src={RiderImg} alt="" />
+        <img 
+        data-aos="fade-down"
+        data-aos-offset="200"
+        data-aos-delay="100"
+        data-aos-duration="1500"
+        className="w-[500px] h-[400px]" src={RiderImg} alt="" />
       </div>
 
 
