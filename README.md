@@ -13,7 +13,7 @@ This project focuses on clean UX, transparent pricing, and scalable backend arch
 🎥 Demo Video: 
 A complete walkthrough of Parcelio showing parcel creation, Stripe payment,
 rider assignment, live tracking, and role-based dashboards.  
-[Watch Full Project Demo](https://drive.google.com/file/d/1xPFsCul16qpB-N-GCSGQY-fVWi8J8hYQ/view?usp=sharing)
+[Watch Full Project Demo](https://youtu.be/ej9ot_5UsGk)
 
 
 ## 📌 Features Overview
